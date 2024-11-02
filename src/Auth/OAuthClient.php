@@ -132,4 +132,53 @@ class OAuthClient extends Client
     {
         return base64_encode(hash_hmac('sha256', $timestamp, $this->credential['client_secret'], true));
     }
+
+
+
+
+    /**
+     * 第三方网站登录.
+     *
+     * @param string|null $url
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function webRedirect($url = null)
+    {
+        $query = [
+            'client_id' => $this->credential['client_id'],
+            'response_type' => 'code',
+            'scope' => $this->credential['scope'],
+            'state' => $this->makeState(),
+            'redirect_uri' => $url ?: $this->getRedirectUrl(),
+            'prompt' => 'consent'
+        ];
+
+        return new RedirectResponse(
+            sprintf('https://login.dingtalk.com/oauth2/auth?%s', http_build_query(array_filter($query)))
+        );
+    }
+
+
+    /**
+     * getUserInfo.
+     *
+     * @param string $code
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function getUserInfo($code){
+
+        $data = [
+            'code' => $code,
+        ];
+
+        $query = [
+            'access_token' => $this->app['access_token']->getToken(),
+        ];
+
+        return $this->postJson('topapi/v2/user/getuserinfo', $data, $query);
+    }
 }
