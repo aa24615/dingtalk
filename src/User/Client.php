@@ -67,7 +67,7 @@ class Client extends BaseClient
     public function list($dept_id, $cursor, $size, $order_field = null, $contain_access_limit = false, $language = null)
     {
 
-        return $this->client->get('topapi/v2/user/list', [
+        return $this->client->post('topapi/v2/user/list', [
             'dept_id' => $dept_id,
             'cursor' => $cursor,
             'size' => $size,
