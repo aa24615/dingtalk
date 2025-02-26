@@ -68,7 +68,7 @@ class Client extends BaseClient
     {
 
         return $this->client->get('topapi/v2/user/list', [
-            'department_id' => $dept_id,
+            'dept_id' => $dept_id,
             'cursor' => $cursor,
             'size' => $size,
             'order_field' => $order_field,
