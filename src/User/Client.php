@@ -16,6 +16,18 @@ use EasyDingTalk\Kernel\BaseClient;
 class Client extends BaseClient
 {
     /**
+     * 获取部门用户 Userid 列表
+     *
+     * @param int $departmentId
+     *
+     * @return mixed
+     */
+    public function getUserIds($departmentId)
+    {
+        return $this->client->get('user/getDeptMember', ['deptId' => $departmentId]);
+    }
+
+    /**
      * 获取用户详情
      *
      * @param string $userid
@@ -26,18 +38,6 @@ class Client extends BaseClient
     public function get($userid, $lang = null)
     {
         return $this->client->get('user/get', compact('userid', 'lang'));
-    }
-
-    /**
-     * 获取部门用户 Userid 列表
-     *
-     * @param int $departmentId
-     *
-     * @return mixed
-     */
-    public function getUserIds($departmentId)
-    {
-        return $this->client->get('user/getDeptMember', ['deptId' => $departmentId]);
     }
 
     /**
@@ -55,6 +55,24 @@ class Client extends BaseClient
     {
         return $this->client->get('user/simplelist', [
             'department_id' => $departmentId, 'offset' => $offset, 'size' => $size, 'order' => $order, 'lang' => $lang,
+        ]);
+    }
+
+
+    /**
+     * v2 获取部门用户详情.
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function list($dept_id, $cursor, $size, $order_field = null, $contain_access_limit = false, $language = null)
+    {
+
+        return $this->client->get('topapi/v2/user/list', [
+            'department_id' => $dept_id,
+            'cursor' => $cursor,
+            'size' => $size,
+            'order_field' => $order_field,
+            'language' => $language,
         ]);
     }
 
@@ -192,6 +210,16 @@ class Client extends BaseClient
     }
 
     /**
+     * 获取企业已激活的员工人数
+     *
+     * @return mixed
+     */
+    public function getActivatedCount()
+    {
+        return $this->getCount(1);
+    }
+
+    /**
      * 获取企业员工人数
      *
      * @param int $onlyActive
@@ -201,16 +229,6 @@ class Client extends BaseClient
     public function getCount($onlyActive = 0)
     {
         return $this->client->get('user/get_org_user_count', compact('onlyActive'));
-    }
-
-    /**
-     * 获取企业已激活的员工人数
-     *
-     * @return mixed
-     */
-    public function getActivatedCount()
-    {
-        return $this->getCount(1);
     }
 
     /**
