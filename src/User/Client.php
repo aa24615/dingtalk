@@ -258,4 +258,19 @@ class Client extends BaseClient
             'query_date' => $query_date, 'offset' => $offset, 'size' => $size
         ]);
     }
+
+    /**
+     * 获取用户详情v2
+     *
+     * @param string $userid
+     * @param string|null $lang
+     *
+     * @return mixed
+     */
+    public function getV2UserInfo($userid, $lang = null)
+    {
+        return $this->client->post('topapi/v2/user/get', [
+            'userid' => $userid, 'lang' => $lang
+        ]);
+    }
 }
