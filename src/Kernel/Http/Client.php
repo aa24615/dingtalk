@@ -11,6 +11,7 @@
 
 namespace EasyDingTalk\Kernel\Http;
 
+use EasyDingTalk\Kernel\Concerns\HttpClientTrait;
 use GuzzleHttp\Middleware;
 use Overtrue\Http\Client as BaseClient;
 use Psr\Http\Message\RequestInterface;
@@ -18,6 +19,8 @@ use Psr\Http\Message\ResponseInterface;
 
 class Client extends BaseClient
 {
+    use HttpClientTrait;
+
     /**
      * @var \EasyDingTalk\Application
      */
