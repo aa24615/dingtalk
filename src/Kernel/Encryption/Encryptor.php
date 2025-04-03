@@ -103,9 +103,6 @@ class Encryptor
 
         $contentLen = unpack('N', substr($data, 0, 4))[1];
 
-        if (substr($data, $contentLen + 4) !== $this->key) {
-            throw new \RuntimeException('Invalid CorpId.');
-        }
 
         return substr($data, 4, $contentLen);
     }
