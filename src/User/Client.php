@@ -273,4 +273,20 @@ class Client extends BaseClient
             'userid' => $userid, 'lang' => $lang
         ]);
     }
+
+    /**
+     * 获取当前登录用户信息（通过 User Access Token）
+     *
+     * @param string $accessToken 用户访问令牌（getUserAccessToken 获取的 accessToken）
+     *
+     * @return array
+     *
+     * @see https://open.dingtalk.com/document/development/dingtalk-retrieve-user-information
+     */
+    public function me(string $accessToken): array
+    {
+        return $this->client->get('https://api.dingtalk.com/v1.0/contact/users/me', [], [
+            'headers' => ['x-acs-dingtalk-access-token' => $accessToken],
+        ]);
+    }
 }
