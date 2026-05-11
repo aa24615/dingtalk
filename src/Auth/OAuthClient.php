@@ -181,4 +181,27 @@ class OAuthClient extends Client
 
         return $this->postJson('topapi/v2/user/getuserinfo', $data, $query);
     }
+
+    /**
+     * 获取用户Token (User Access Token).
+     *
+     * 通过授权码获取用户级别的访问令牌
+     *
+     * @param string $code OAuth2授权码
+     *
+     * @return array 包含 accessToken, refreshToken, expireIn, scope
+     *
+     * @see https://open.dingtalk.com/document/development/obtain-user-token
+     */
+    public function getUserAccessToken(string $code): array
+    {
+        $data = [
+            'clientId' => $this->credential['client_id'],
+            'clientSecret' => $this->credential['client_secret'],
+            'code' => $code,
+            'grantType' => 'authorization_code',
+        ];
+
+        return $this->postJson('https://api.dingtalk.com/v1.0/oauth2/userAccessToken', $data);
+    }
 }
