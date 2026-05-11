@@ -285,7 +285,7 @@ class Client extends BaseClient
      */
     public function me(string $accessToken): array
     {
-        return $this->client->get('https://api.dingtalk.com/v1.0/contact/users/me', [], [
+        return $this->client->request('https://api.dingtalk.com/v1.0/contact/users/me', 'GET', [
             'headers' => ['x-acs-dingtalk-access-token' => $accessToken],
         ]);
     }
