@@ -108,8 +108,22 @@ class OAuthClient extends Client
             throw new InvalidStateException();
         }
 
+        return $this->userByCode($this->app['request']->get('code'));
+    }
+
+    /**
+     * 通过授权码获取用户信息（外部传入 code）.
+     *
+     * @param string $code OAuth2 授权码
+     *
+     * @return array
+     */
+    public function userByCode(string $code): array
+    {
+
+
         $data = [
-            'tmp_auth_code' => $this->app['request']->get('code'),
+            'tmp_auth_code' => $code,
         ];
 
         $query = [
